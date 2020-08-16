@@ -21,6 +21,8 @@ export class RegistrationComponent implements OnInit {
   profilePic: string = "assets/images/user.png";
   hide: boolean = true;
   profileImage: File;
+
+  // Values for Chip Autocomplete 
   @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
   visible = true;
   selectable = true;
@@ -139,7 +141,7 @@ export class RegistrationComponent implements OnInit {
     let str: string = '';
     for (let value of list) {
       if (str.length > 0) {
-        str += '|';
+        str += ',';
       }
       str += value;
     }

@@ -42,7 +42,6 @@ export class HomeComponent implements OnInit {
    this.blogService.getAllBlogs() .subscribe((response) =>{
      console.log('Blogs - '+response.length);
      this.blogs = response;
-     console.log(this.blogs[0].content);
    })
   }
   fetchUser() {
@@ -74,6 +73,10 @@ export class HomeComponent implements OnInit {
       content = content.substring(0, 540) + '...';
     }
     return content;
+  }
+
+  moveToAddScreen(){
+    this.route.navigate(['blogs/add']);
   }
 
 }

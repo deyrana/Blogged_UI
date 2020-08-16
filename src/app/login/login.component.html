@@ -6,10 +6,10 @@
     <img [src]="profilePic" alt="image"><br>
     <mat-form-field class="form-field" appearance="outline">
         <mat-label> Username </mat-label>
-        <input matInput formControlName="username" placeholder="Enter Username" cdkFocusInitial required>
+        <input matInput formControlName="username" placeholder="Enter Username" required>
         <mat-error *ngIf="LoginForm.controls.username.touched && LoginForm.controls.username.invalid">
             <span *ngIf="LoginForm.controls.username.errors.required">This field is mandatory.</span>
-          </mat-error>
+        </mat-error>
     </mat-form-field>
     <mat-form-field class="form-field" appearance="outline">
         <mat-label> Password </mat-label>

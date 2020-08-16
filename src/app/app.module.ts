@@ -29,6 +29,7 @@ import { HomeComponent } from './home/home.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { AddBlogComponent } from './add-blog/add-blog.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     RegistrationComponent,
     UserComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    AddBlogComponent
   ],
   imports: [
     BrowserModule,

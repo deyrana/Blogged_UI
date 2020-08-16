@@ -1,0 +1,78 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="backdrop">
+    <mat-drawer #drawer class="navbar-style" [mode]="navbarMode">
+        <img [src]="imgUrl" class="nav-content image-style">
+        <span class="nav-content">{{username}}</span>
+        <mat-divider></mat-divider>
+        <span class="nav-content">
+            <button (click)="navigateTo()" class="navbar-btn">Account <mat-icon>account_circle</mat-icon>
+            </button></span>
+        <span class="nav-content"><button class="navbar-btn">My Blogs <mat-icon>notes</mat-icon></button></span>
+        <span class="nav-content"><button class="navbar-btn">Favourite <mat-icon>star_border</mat-icon></button></span>
+        <span class="nav-content"><button class="navbar-btn">ReadList <mat-icon>chrome_reader_mode</mat-icon>
+            </button></span>
+        <span class="nav-content"><button class="navbar-btn">Liked Blogs <mat-icon>favorite_outline</mat-icon>
+            </button></span>
+        <span class="nav-content"><button (click)="logout()" class="navbar-btn">Logout <mat-icon>logout</mat-icon>
+            </button></span>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
+        <form [formGroup]="AddBlogForm" (submit) = "submit()">
+
+            <mat-form-field appearance="legacy" class="genreStyle">
+                <mat-chip-list #chipList aria-label="Genre selection">
+                    <mat-chip *ngFor="let genre of selectedGenre" [selectable]="selectable" [removable]="removable"
+                        (removed)="remove(genre)">
+                        {{genre}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+
+                    <input matInput placeholder="Genre" #genreInput formControlName="genres"
+                        [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)"
+                        [matAutocomplete]="auto">
+
+
+                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                        <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+
+
+                </mat-chip-list>
+                
+                <mat-error *ngIf="AddBlogForm.controls.genres.touched && AddBlogForm.controls.genres.invalid">
+                    <span *ngIf="AddBlogForm.controls.genres.errors.required">This field is mandatory.</span>
+                </mat-error>
+            
+            </mat-form-field>
+            
+
+            <div class="form-container">
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Header</mat-label>
+                    <textarea matInput formControlName="header" placeholder="Enter Header for the Blog Here"></textarea>
+                    <mat-error *ngIf="AddBlogForm.controls.header.touched && AddBlogForm.controls.header.invalid">
+                        <span *ngIf="AddBlogForm.controls.header.errors.required">This field is mandatory.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>Content</mat-label>
+                    <textarea class="contentStyle" matInput formControlName="content"
+                        placeholder="Enter Content for the Blog Here"></textarea>
+                    <mat-error *ngIf="AddBlogForm.controls.content.touched && AddBlogForm.controls.content.invalid">
+                        <span *ngIf="AddBlogForm.controls.content.errors.required">This field is mandatory.</span>
+                    </mat-error>
+                </mat-form-field>
+
+                <div class=" btn">
+                    <button mat-raised-button color="primary" type="submit">Post</button>
+                </div>
+                <div class=" btn">
+                    <button mat-raised-button color="warn" type="button">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </mat-drawer-content>
