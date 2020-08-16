@@ -1,0 +1,161 @@
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatAutocompleteSelectedEvent, MatAutocomplete } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { UserService } from 'src/app/user/user.service';
+import { User } from 'src/app/user/user.model';
+import { DatePipe } from '@angular/common';
+import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-registration',
+  templateUrl: './registration.component.html',
+  styleUrls: ['./registration.component.css']
+})
+export class RegistrationComponent implements OnInit {
+
+  RegForm: FormGroup;
+  profilePic: string = "assets/images/user.png";
+  hide: boolean = true;
+  profileImage: File;
+  @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  genre = [
+    'Adventure', 'Horror', 'Thriller', 'Mystery', 'Gore'
+  ];
+  selectedGenre = [
+  ];
+  filteredOptions: Observable<string[]>;
+
+
+  constructor(private formBuilder: FormBuilder,
+    private userService: UserService, private datepipe: DatePipe,
+    private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.RegForm = this.formBuilder.group({
+      image: [null],
+      name: [null, Validators.required],
+      username: [null, Validators.required],
+      password: [null, Validators.required],
+      email: [null, Validators.email],
+      dob: [null],
+      genres: [null]
+    });
+    this.filteredOptions = this.RegForm.get('genres').valueChanges.pipe(
+      startWith(null),
+      map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
+  }
+
+  onSelectFile(e) {
+    if (e.target.files) {
+      var reader = new FileReader();
+      reader.readAsDataURL(e.target.files[0]);
+      this.profileImage = e.target.files[0];
+      reader.onload = (event: any) => {
+        this.profilePic = event.target.result;
+        this.RegForm.patchValue({
+          image: reader.result
+        });
+      }
+    }
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.genre.filter(gnr => gnr.toLowerCase().indexOf(value.toLowerCase()) === 0);
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if (this.genre.indexOf(value.toLowerCase().trim()) === -1) {
+      console.log(value.toLowerCase().trim())
+      return;
+    }
+
+    if ((value || '').trim()) {
+      this.selectedGenre.push(value.trim());
+    }
+
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(genre: any): void {
+    const index = this.selectedGenre.indexOf(genre);
+
+    if (index >= 0) {
+      this.selectedGenre.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.selectedGenre.push(event.option.value);
+    this.RegForm.get('genres').setValue(null);
+    this.genreInput.nativeElement.value = '';
+  }
+
+  submit() {
+    this.RegForm.get('genres').setValue(this.selectedGenre);
+    if (this.RegForm.valid) {
+      const formValues = this.setUpFormData();
+      this.userService.saveUserData(formValues).subscribe((response) => {
+        if (response.status === 200) {
+          console.log("Success");
+          this.login();
+        } else {
+          console.log("Failure");
+        }
+      });
+    }
+  }
+  setUpFormData() {
+    const uploadFormData = new FormData();
+    if (this.profileImage != null) {
+      uploadFormData.append('imageFile', this.profileImage, this.profileImage.name);
+    }
+    let dob: string = this.datepipe.transform(this.RegForm.get('dob').value, 'yyyy-MM-dd');
+    let user: User = new User(this.RegForm.get('name').value, this.RegForm.get('username').value,
+      this.RegForm.get('password').value, this.RegForm.get('email').value, dob, this.getValuesAsPipes(this.RegForm.get('genres').value));
+
+    uploadFormData.append("info", new Blob([JSON.stringify(user)],
+      {
+        type: "application/json"
+      }));
+    console.log(user);
+    return uploadFormData;
+  }
+  getValuesAsPipes(list: any): any {
+    let str: string = '';
+    for (let value of list) {
+      if (str.length > 0) {
+        str += '|';
+      }
+      str += value;
+    }
+    return str;
+  }
+
+  login() {
+    localStorage.setItem('isLoggedIn', "true");
+    localStorage.setItem('token', this.RegForm.get('username').value);
+    this.router.navigate(['/home']);
+  }
+
+  // logout() {  
+  //   console.log('logout');  
+  //   this.authService.logout();  
+  //   this.router.navigate(['/login']);  
+  // }  
+
+}
