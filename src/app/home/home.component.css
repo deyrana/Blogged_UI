@@ -15,42 +15,6 @@
       background-color: rgb(236, 229, 229);
   }
 
-  .nav-content{
-    display: block;
-    padding: 10px;
-    text-align: center;
-    font-size: 19.5px;
-  }
-
-  mat-icon{
-    vertical-align: text-bottom ;
-    padding-left: 5px;
-  }
-  
-  .image-style{
-    border-radius: 50%;
-    width: 110px;
-    height: 110px;
-    margin-left: auto;
-    margin-right: auto;
-    padding-top: 30px;
-  }
-
-  mat-divider{
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-bottom: 20px;
-  }
-
-  .navbar-btn{
-    background: transparent !important;
-    border: none !important;
-    font-size: 19.5px;
-    outline:none;
-    cursor: pointer;
-  }
-
   .blog-view-style {
     width:80%;
     margin-left: auto;

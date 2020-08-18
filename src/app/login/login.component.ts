@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from './login.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent implements OnInit {
   validUser: boolean = false;
   profilePic: string = "assets/images/user.png";
   constructor(private formBuilder: FormBuilder, private loginService: LoginService,
-    private router: Router) { }
+    private router: Router, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.LoginForm = this.formBuilder.group({
@@ -27,10 +29,21 @@ export class LoginComponent implements OnInit {
   submit() {
     if (this.LoginForm.valid) {
       const formValues = this.setUpFormData();
-      this.loginService.validateCred(formValues).subscribe((response) => {
-        this.validUser = response.body;
-        this.login();
-      });
+      this.loginService.validateCred(formValues).subscribe(
+        (response) => {
+          console.log(response.status);
+          console.log(response.body);
+          this.validUser = response.body;
+          this.login();
+        },
+        error => {
+          let title: string = "Message";
+          let content: string = "You are not a valid user. Please SignUp to continue";
+          let url: string = "/signup";
+          let primeBtn: string = "Cancel";
+          let secBtn: string = "SignUp";
+          this.openDialog(title, content, url, primeBtn, secBtn);
+        });
     }
   }
   setUpFormData() {
@@ -46,7 +59,36 @@ export class LoginComponent implements OnInit {
       localStorage.setItem('isLoggedIn', "true");
       localStorage.setItem('token', this.LoginForm.get('username').value);
       this.router.navigate(['/home']);
+    } else {
+      let title: string = "Message";
+      let content: string = "Username/Password entered is incorrect";
+      let url: string = null;
+      let primeBtn: string = "Ok";
+      let secBtn: string =null;
+      this.openDialog(title, content, url, primeBtn, secBtn);
     }
+  }
+
+  openDialog(title: string, content: string, url: string, primeBtn: string, secBtn: string): void {
+    let obj = {};
+    obj['title'] = title;
+    obj['content'] = content;
+    obj['primeBtn'] = primeBtn;
+    if (url != null) {
+      obj['url'] = url;
+    }
+    if (secBtn != null) {
+      obj['secBtn'] = secBtn;
+    }
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
 }

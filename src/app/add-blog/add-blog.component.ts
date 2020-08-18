@@ -8,7 +8,6 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
-import { User } from '../user/user.model';
 import { BlogService } from '../services/blog.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -24,7 +23,6 @@ export class AddBlogComponent implements OnInit {
   headerTitle: string;
   backdrop: boolean;
   navbarMode: string;
-  imgUrl: string;
   username: string;
 
   @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
@@ -41,15 +39,15 @@ export class AddBlogComponent implements OnInit {
   filteredOptions: Observable<string[]>;
 
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private route: Router,
-    private userService: UserService, private blogService: BlogService, private dialog: MatDialog) { }
+  constructor(private formBuilder: FormBuilder, private route: Router,
+    private blogService: BlogService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.headerTitle = "Add Blog";
     this.backdrop = true;
     this.navbarMode = "over";
-    this.imgUrl = "assets/images/user.png";
     this.username = localStorage.getItem('token');
+
     this.AddBlogForm = this.formBuilder.group({
       header: [null, Validators.required],
       genres: [null],
@@ -59,9 +57,6 @@ export class AddBlogComponent implements OnInit {
     this.filteredOptions = this.AddBlogForm.get('genres').valueChanges.pipe(
       startWith(null),
       map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
-
-    this.fetchUser();
-
   }
 
   private _filter(value: string): string[] {
@@ -104,20 +99,6 @@ export class AddBlogComponent implements OnInit {
     console.log('Button clicked');
   }
 
-  logout() {
-    this.authService.logout();
-    this.route.navigate(['login']);
-  }
-  fetchUser() {
-    this.userService.getUserData(this.username).subscribe((response) => {
-      console.log('User is - ' + response.name);
-      let imgBin: string = response.image;
-      if (imgBin != null) {
-        this.imgUrl = 'data:image/jpeg;base64,' + response.image;
-      }
-    })
-  }
-
   submit() {
     if (this.AddBlogForm.valid) {
       this.AddBlogForm.get('genres').setValue(this.selectedGenre);
@@ -130,7 +111,7 @@ export class AddBlogComponent implements OnInit {
           let title: string = "Success";
           let content: string = "Blog has been posted successfully!";
           let url: string = null;
-          let primeBtn: string =null;
+          let primeBtn: string = null;
           let secBtn: string = "Ok";
           this.openDialog(title, content, url, primeBtn, secBtn);
           this.AddBlogForm.reset();

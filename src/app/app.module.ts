@@ -32,6 +32,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { AddBlogComponent } from './add-blog/add-blog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
+import { SidenavcontentComponent } from './sidenavcontent/sidenavcontent.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { DialogComponent } from './dialog/dialog.component';
     HeaderComponent,
     HomeComponent,
     AddBlogComponent,
-    DialogComponent
+    DialogComponent,
+    SidenavcontentComponent
   ],
   imports: [
     BrowserModule,

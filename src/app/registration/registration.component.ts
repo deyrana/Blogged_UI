@@ -9,6 +9,8 @@ import { UserService } from 'src/app/user/user.service';
 import { User } from 'src/app/user/user.model';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-registration',
@@ -39,7 +41,7 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private userService: UserService, private datepipe: DatePipe,
-    private router: Router) {
+    private router: Router,  private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -111,13 +113,22 @@ export class RegistrationComponent implements OnInit {
     this.RegForm.get('genres').setValue(this.selectedGenre);
     if (this.RegForm.valid) {
       const formValues = this.setUpFormData();
-      this.userService.saveUserData(formValues).subscribe((response) => {
+      this.userService.saveUserData(formValues).subscribe(
+        (response) => {
+        console.log(response);
         if (response.status === 200) {
           console.log("Success");
           this.login();
-        } else {
-          console.log("Failure");
         }
+      },
+      error => {
+        console.log("Failue");
+          let title: string = "Error!";
+          let content: string = "Username already Exist. Please select a new Username";
+          let url: string = null;
+          let primeBtn: string = null;
+          let secBtn: string = "Ok";
+          this.openDialog(title, content, url, primeBtn, secBtn);
       });
     }
   }
@@ -134,7 +145,6 @@ export class RegistrationComponent implements OnInit {
       {
         type: "application/json"
       }));
-    console.log(user);
     return uploadFormData;
   }
   getValuesAsPipes(list: any): any {
@@ -154,10 +164,26 @@ export class RegistrationComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
-  // logout() {  
-  //   console.log('logout');  
-  //   this.authService.logout();  
-  //   this.router.navigate(['/login']);  
-  // }  
+  openDialog(title: string, content: string, url: string, primeBtn: string, secBtn: string): void {
+    let obj = {};
+    obj['title'] = title;
+    obj['content'] = content;
+    obj['primeBtn'] = primeBtn;
+    if (url != null) {
+      obj['url'] = url;
+    }
+    if (secBtn != null) {
+      obj['secBtn'] = secBtn;
+    }
+
+    const dialogRef = this.dialog.open(DialogComponent, {
+      width: '250px',
+      data: obj
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 
 }
