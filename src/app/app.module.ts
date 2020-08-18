@@ -28,8 +28,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { HomeComponent } from './home/home.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { AddBlogComponent } from './add-blog/add-blog.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import { AddBlogComponent } from './add-blog/add-blog.component';
     UserComponent,
     HeaderComponent,
     HomeComponent,
-    AddBlogComponent
+    AddBlogComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,7 +67,8 @@ import { AddBlogComponent } from './add-blog/add-blog.component';
     MatSidenavModule,
     MatDividerModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatDialogModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
