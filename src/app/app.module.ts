@@ -33,6 +33,7 @@ import { AddBlogComponent } from './add-blog/add-blog.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { SidenavcontentComponent } from './sidenavcontent/sidenavcontent.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { SidenavcontentComponent } from './sidenavcontent/sidenavcontent.compone
     HomeComponent,
     AddBlogComponent,
     DialogComponent,
-    SidenavcontentComponent
+    SidenavcontentComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

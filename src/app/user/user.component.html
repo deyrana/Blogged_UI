@@ -1,1 +1,125 @@
-<p>user works!</p>
+<mat-drawer-container class="example-container" [hasBackdrop]="backdrop">
+    <mat-drawer #drawer class="navbar-style" [mode]="navbarMode">
+        <app-sidenavcontent></app-sidenavcontent>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
+
+        <div class="form-container">
+            <img [src]="imgUrl" class="image-style">
+
+            <mat-divider></mat-divider>
+
+            <div class="section">
+                <div class="container">
+                    <h1>Personal Information</h1>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name">Name:</label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span>Rana</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name">Username:</label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span>Arceus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name">Email:</label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span>ABCisusername@Gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name">DOB:</label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span>23/08/1997</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <div class="section">
+                <div class="container">
+                    <h1>Blogged Statistics</h1>
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6 label">
+                                    <label for="name">Blogs Posted:</label>
+                                </div>
+                                <div class="col-6 value">
+                                    <span>100</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6 label">
+                                    <label for="name">Liked Blogs:</label>
+                                </div>
+                                <div class="col-6 value">
+                                    <span>500</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--  -->
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6 label">
+                                    <label for="name">Favourites:</label>
+                                </div>
+                                <div class="col-6 value">
+                                    <span>32</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-6 label">
+                                    <label for="name">Drafts:</label>
+                                </div>
+                                <div class="col-6 value">
+                                    <span>23</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+
+
+
+    </mat-drawer-content>
+</mat-drawer-container>
