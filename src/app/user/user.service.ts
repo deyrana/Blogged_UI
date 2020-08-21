@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { UserComplete } from 'src/app/user/user-complete.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,15 @@ export class UserService {
     params = params.append('username', username);
     return this.http.get<any>(this.restApi + 'users/user', {
       params: params
+    });
+  }
+
+  getUserCompleteData(userId: string, username: string): Observable<UserComplete> {
+    let params = new HttpParams();
+    params = params.append('userId', userId);
+    params = params.append('username', username);
+    return this.http.get<UserComplete>(this.restApi + '/users/userDetail', {
+      params: params,
     });
   }
 }

@@ -115,9 +115,7 @@ export class RegistrationComponent implements OnInit {
       const formValues = this.setUpFormData();
       this.userService.saveUserData(formValues).subscribe(
         (response) => {
-        console.log(response);
         if (response.status === 200) {
-          console.log("Success");
           this.login();
         }
       },

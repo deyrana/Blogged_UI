@@ -5,7 +5,11 @@
     <mat-drawer-content>
         <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
 
-        <div class="form-container">
+        <div *ngIf = "!pageload" class="spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <div class="form-container" *ngIf="userCompleteData!=null">
             <img [src]="imgUrl" class="image-style">
 
             <mat-divider></mat-divider>
@@ -20,7 +24,7 @@
                                     <label for="name">Name:</label>
                                 </div>
                                 <div class="col-9 value">
-                                    <span>Rana</span>
+                                    <span>{{userCompleteData.name}}</span>
                                 </div>
                             </div>
                         </div>
@@ -30,7 +34,7 @@
                                     <label for="name">Username:</label>
                                 </div>
                                 <div class="col-9 value">
-                                    <span>Arceus</span>
+                                    <span>{{userCompleteData.username}}</span>
                                 </div>
                             </div>
                         </div>
@@ -43,7 +47,7 @@
                                     <label for="name">Email:</label>
                                 </div>
                                 <div class="col-9 value">
-                                    <span>ABCisusername@Gmail.com</span>
+                                    <span>{{userCompleteData.email}}</span>
                                 </div>
                             </div>
                         </div>
@@ -53,7 +57,30 @@
                                     <label for="name">DOB:</label>
                                 </div>
                                 <div class="col-9 value">
-                                    <span>23/08/1997</span>
+                                    <span>{{userCompleteData.dateOfBirth | date}}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name">Interested Genres:</label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span>{{userCompleteData.genres}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row">
+                                <div class="col-3 label">
+                                    <label for="name"></label>
+                                </div>
+                                <div class="col-9 value">
+                                    <span></span>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +100,7 @@
                                     <label for="name">Blogs Posted:</label>
                                 </div>
                                 <div class="col-6 value">
-                                    <span>100</span>
+                                    <span>{{userCompleteData.blogCount}}</span>
                                 </div>
                             </div>
                         </div>
@@ -114,12 +141,13 @@
                 </div>
             </div>
 
-
-
+            <div style="text-align: center; padding: 5px;">
+                <button mat-raised-button (click) = "navigateHome()" color="primary">Back</button>
+            </div>
         </div>
 
 
-
+        <button mat-fab class="edit-btn" color="primary" type="button"><i class="material-icons">edit</i></button>
 
     </mat-drawer-content>
 </mat-drawer-container>

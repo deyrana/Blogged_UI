@@ -12,6 +12,7 @@ export class SidenavcontentComponent implements OnInit {
 
   imgUrl: string;
   username: string;
+  userid: number;
   constructor(private userService: UserService, private authService: AuthService,
     private route: Router) { }
 
@@ -25,6 +26,7 @@ export class SidenavcontentComponent implements OnInit {
     this.userService.getUserData(this.username).subscribe((response) => {
       console.log('User is - ' + response.name);
       let imgBin: string = response.image;
+      this.userid = response.userId;
       if (imgBin != null) {
         this.imgUrl = 'data:image/jpeg;base64,' + response.image;
       }
@@ -32,8 +34,8 @@ export class SidenavcontentComponent implements OnInit {
   }
 
 
-  navigateTo() {
-    console.log('Button clicked');
+  navigateToAccount() {
+    this.route.navigate(['user/detail'], { queryParams: { userId: this.userid, username: this.username } });
   }
 
   logout() {

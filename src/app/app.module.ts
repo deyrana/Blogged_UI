@@ -34,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogComponent } from './dialog/dialog.component';
 import { SidenavcontentComponent } from './sidenavcontent/sidenavcontent.component';
 import { FooterComponent } from './footer/footer.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { FooterComponent } from './footer/footer.component';
     MatDividerModule,
     MatCardModule,
     MatGridListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
