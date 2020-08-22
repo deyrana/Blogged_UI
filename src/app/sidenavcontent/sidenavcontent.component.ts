@@ -24,7 +24,6 @@ export class SidenavcontentComponent implements OnInit {
 
   fetchUser() {
     this.userService.getUserData(this.username).subscribe((response) => {
-      console.log('User is - ' + response.name);
       let imgBin: string = response.image;
       this.userid = response.userId;
       if (imgBin != null) {

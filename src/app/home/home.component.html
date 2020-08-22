@@ -5,27 +5,38 @@
   <mat-drawer-content>
     <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
 
-    <div *ngFor = "let blog of blogs">
-      <mat-card class="blog-view-style">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>{{blog.header}}</mat-card-title>
-          <mat-card-subtitle>Created by <strong>{{blog.createdBy}}</strong> on {{blog.createdTs | date:'dd-MM-yyyy HH:mm:ss'}}</mat-card-subtitle>
-          <mat-card-subtitle>{{blog.genres}}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            {{truncateContent(blog.content)}}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
+    <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" [pageSizeOptions]="[3, 5, 10, 25, 100]"
+      [pageSize]="5"></mat-paginator>
+
+    <div *ngFor="let blog of blogs$ | async">
+      <a [routerLink]="['/blogs', blog.blogId]" style="text-decoration:none">
+        <mat-card class="blog-view-style">
+          <mat-card-header>
+            <!-- <div mat-card-avatar class="example-header-image"></div> -->
+            <img *ngIf="blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}" class="example-header-image">
+            <img *ngIf="blog.image ===null " mat-card-avatar src="assets/images/user.png" class="example-header-image">
+            <mat-card-title>{{blog.header}}</mat-card-title>
+            <mat-card-subtitle>Created by <strong>{{blog.createdBy}}</strong> on
+              {{blog.createdTs | date:'dd-MM-yyyy HH:mm:ss'}}</mat-card-subtitle>
+            <mat-card-subtitle>{{blog.genres}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>
+              {{truncateContent(blog.contentStr)}}
+            </p>
+          </mat-card-content>
+          <!-- <mat-card-actions>
           <button mat-button>LIKE</button>
           <button mat-button>SHARE</button>
-        </mat-card-actions>
-      </mat-card>
+        </mat-card-actions> -->
+        </mat-card>
+      </a>
     </div>
 
-    <button mat-fab (click) = "moveToAddScreen()" class="add-btn" color="primary" type="button"><i class="material-icons">add</i></button>
+
+
+    <button mat-fab (click)="moveToAddScreen()" class="add-btn" color="primary" type="button"><i
+        class="material-icons">add</i></button>
 
   </mat-drawer-content>
 </mat-drawer-container>

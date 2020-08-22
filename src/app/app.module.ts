@@ -35,6 +35,7 @@ import { DialogComponent } from './dialog/dialog.component';
 import { SidenavcontentComponent } from './sidenavcontent/sidenavcontent.component';
 import { FooterComponent } from './footer/footer.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ViewBlogComponent } from './view-blog/view-blog.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     AddBlogComponent,
     DialogComponent,
     SidenavcontentComponent,
-    FooterComponent
+    FooterComponent,
+    ViewBlogComponent
   ],
   imports: [
     BrowserModule,

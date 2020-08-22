@@ -1,21 +1,29 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Blog } from 'src/app/models/blog.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  restApi: string = "http://localhost:8080/";
   constructor(private http: HttpClient) { }
 
   getAllBlogs(): Observable<Blog[]> {
-    return this.http.get<Blog[]>(this.restApi + 'blogs');
+    return this.http.get<Blog[]>(environment.restApi + 'blogs');
   }
 
   saveBlog(formData: any): Observable<any> {
-    return this.http.post<any>(this.restApi + 'blogs', formData, { observe: 'response' });
+    return this.http.post<any>(environment.restApi + 'blogs', formData, { observe: 'response' });
+  }
+
+  getBlog(blogid: any): Observable<Blog>{
+    let params = new HttpParams();
+    params = params.append('blogid', blogid);
+    return this.http.get<Blog>(environment.restApi + 'blogs/blog', {
+      params: params
+    });
   }
 }

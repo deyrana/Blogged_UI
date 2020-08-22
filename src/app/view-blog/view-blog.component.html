@@ -1,0 +1,30 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="backdrop">
+  <mat-drawer #drawer class="navbar-style" [mode]="navbarMode">
+    <app-sidenavcontent></app-sidenavcontent>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
+    <div *ngIf="blog$ | async as blog">
+      <mat-card class="blog-view-style">
+        <mat-card-header>
+          <!-- <div mat-card-avatar ng-style="{'background-image': 'url('+ {{ this.var }} +{{ blog.image }} +')'}"></div> -->
+          <img *ngIf = "blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}" class="example-header-image">
+          <img *ngIf = "blog.image ===null " mat-card-avatar src="assets/images/user.png" class="example-header-image">
+          <mat-card-title>{{blog.header}}</mat-card-title>
+          <mat-card-subtitle>Created by <strong>{{blog.createdBy}}</strong> on
+            {{blog.createdTs | date:'dd-MM-yyyy HH:mm:ss'}}</mat-card-subtitle>
+          <mat-card-subtitle>{{blog.genres}}</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{blog.contentStr}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
