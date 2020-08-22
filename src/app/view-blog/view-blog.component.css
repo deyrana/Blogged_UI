@@ -33,3 +33,23 @@
     width: 70px;
     height: 70px;
   }
+
+  .blue{
+    background-color: #747cec;
+    color: white;
+  }
+
+  .red{
+    background-color: #ce414c;
+    color: white;
+  }
+
+  .yellow{
+    background-color: #e2df22;
+    color: white;
+  }
+
+  button{
+    outline:none;
+    border: none;
+  }

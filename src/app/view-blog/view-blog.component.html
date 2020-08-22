@@ -7,8 +7,9 @@
     <div *ngIf="blog$ | async as blog">
       <mat-card class="blog-view-style">
         <mat-card-header>
-          <img *ngIf = "blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}" class="example-header-image">
-          <img *ngIf = "blog.image ===null " mat-card-avatar src="assets/images/user.png" class="example-header-image">
+          <img *ngIf="blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}"
+            class="example-header-image">
+          <img *ngIf="blog.image ===null " mat-card-avatar src="assets/images/user.png" class="example-header-image">
           <mat-card-title>{{blog.header}}</mat-card-title>
           <mat-card-subtitle>Created by <strong>{{blog.createdBy}}</strong> on
             {{blog.createdTs | date:'dd-MM-yyyy HH:mm:ss'}}</mat-card-subtitle>
@@ -20,8 +21,12 @@
           </p>
         </mat-card-content>
         <mat-card-actions>
-          <button mat-button>LIKE</button>
-          <button mat-button>SHARE</button>
+          <button mat-raised-button title="Like Blog" (click)="LikedBtn($event)"><i
+              class="material-icons">thumb_up_alt</i></button>
+          <button mat-raised-button title="Comment"><i class="material-icons">comment</i></button>
+          <button mat-raised-button title="Favourite" (click)="favBtn($event)"><i class="material-icons">favorite</i></button>
+          <button mat-raised-button title="Read List" (click)="readListBtn($event)"><i
+              class="material-icons">format_list_bulleted</i></button>
         </mat-card-actions>
       </mat-card>
     </div>

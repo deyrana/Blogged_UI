@@ -5,21 +5,21 @@
   <mat-drawer-content>
     <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
 
-    <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" [pageSizeOptions]="[3, 5, 10, 25, 100]"
+    <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" class=" box-design" [pageSizeOptions]="[3, 5, 10, 25, 100]"
       [pageSize]="5"></mat-paginator>
 
-    <div class="blog-view-style">
+    <div class="blog-view-style box-design">
       <!-- Filter -->
       <mat-form-field class="filter" appearance="outline">
         <mat-label> Search </mat-label>
-        <input matInput type="text" [(ngModel)]="searchText" (keyup)="doFilter($event.target.value)"
+        <input matInput type="search" [(ngModel)]="searchText" (keyup)="doFilter($event.target.value)"
           placeholder="Enter Text">
       </mat-form-field>
       <!-- End -->
 
       <div *ngFor="let blog of blogs$ | async">
         <a [routerLink]="['/blogs', blog.blogId]" style="text-decoration:none">
-          <mat-card class="blogs">
+          <mat-card class="blogs box-design">
             <mat-card-header>
               <img *ngIf="blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}"
                 class="example-header-image">
@@ -33,7 +33,7 @@
             </mat-card-header>
             <mat-card-content>
               <p appHighlight [searchedWord]="searchText" [content]="truncateContent(blog.contentStr)"
-                [classToApply]="'font-weight-bold'" [setTitle]="'true'">
+                [classToApply]="'font-weight-bold background-color-yellow'" [setTitle]="'true'">
                 {{truncateContent(blog.contentStr)}}
               </p>
             </mat-card-content>

@@ -17,20 +17,45 @@ export class ViewBlogComponent implements OnInit {
   navbarMode: string;
   blog$: Observable<Blog>;
   var: string;
+  styleVal: any;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService) { }
 
   ngOnInit(): void {
+    this.route.params.subscribe((response) => {
+      this.blog$ = this.blogService.getBlog(response.id);
+      this.blog$.subscribe((response) => {
+        console.log(response);
+      })
+    })
     this.headerTitle = "View Blog";
     this.backdrop = true;
     this.navbarMode = "over";
     this.var = "data:image/jpeg;base64,";
-    this.route.params.subscribe((response)=>{
-      this.blog$ = this.blogService.getBlog(response.id);
-      this.blog$.subscribe((response) =>{
-        console.log(response);
-      })
-    })
+  }
+
+  LikedBtn(e) {
+    if (e.target.value != undefined) {
+      const classList = e.target.classList;
+      const classes = e.target.className;
+      classes.includes('blue') ? classList.remove('blue') : classList.add('blue');
+    }
+  }
+
+  readListBtn(e) {
+    if (e.target.value != undefined) {
+      const classList = e.target.classList;
+      const classes = e.target.className;
+      classes.includes('yellow') ? classList.remove('yellow') : classList.add('yellow');
+    }
+  }
+
+  favBtn(e) {
+    if (e.target.value != undefined) {
+      const classList = e.target.classList;
+      const classes = e.target.className;
+      classes.includes('red') ? classList.remove('red') : classList.add('red');
+    }
   }
 
 }
