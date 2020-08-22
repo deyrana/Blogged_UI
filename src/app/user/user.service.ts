@@ -31,4 +31,12 @@ export class UserService {
       params: params,
     });
   }
+
+  getCodeMapByCat(cat: string): Observable<string[]> {
+    let params = new HttpParams();
+    params = params.append('category', cat);
+    return this.http.get<string[]>(environment.restApi + 'code', {
+      params: params
+    });
+  }
 }

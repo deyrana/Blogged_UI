@@ -32,7 +32,6 @@ export class RegistrationComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   genre = [
-    'Adventure', 'Horror', 'Thriller', 'Mystery', 'Gore'
   ];
   selectedGenre = [
   ];
@@ -41,10 +40,16 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private userService: UserService, private datepipe: DatePipe,
-    private router: Router,  private dialog: MatDialog) {
+    private router: Router, private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
+    this.userService.getCodeMapByCat('Genre').subscribe((response) => {
+      this.genre = response;
+      this.filteredOptions = this.RegForm.get('genres').valueChanges.pipe(
+        startWith(null),
+        map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
+    });
     this.RegForm = this.formBuilder.group({
       image: [null],
       name: [null, Validators.required],
@@ -54,9 +59,6 @@ export class RegistrationComponent implements OnInit {
       dob: [null],
       genres: [null]
     });
-    this.filteredOptions = this.RegForm.get('genres').valueChanges.pipe(
-      startWith(null),
-      map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
   }
 
   onSelectFile(e) {
@@ -81,12 +83,11 @@ export class RegistrationComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-    if (this.genre.indexOf(value.toLowerCase().trim()) === -1) {
-      console.log(value.toLowerCase().trim())
+    if (this.genre.indexOf(value.trim()) === -1) {
       return;
     }
 
-    if ((value || '').trim()) {
+    if ((value || '').trim() && this.selectedGenre.indexOf(value.trim()) === -1) {
       this.selectedGenre.push(value.trim());
     }
 
@@ -104,7 +105,9 @@ export class RegistrationComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedGenre.push(event.option.value);
+    if (this.selectedGenre.indexOf(event.option.value.trim()) === -1) {
+      this.selectedGenre.push(event.option.value);
+    }
     this.RegForm.get('genres').setValue(null);
     this.genreInput.nativeElement.value = '';
   }
@@ -115,19 +118,19 @@ export class RegistrationComponent implements OnInit {
       const formValues = this.setUpFormData();
       this.userService.saveUserData(formValues).subscribe(
         (response) => {
-        if (response.status === 200) {
-          this.login();
-        }
-      },
-      error => {
-        console.log("Failue");
+          if (response.status === 200) {
+            this.login();
+          }
+        },
+        error => {
+          console.log("Failue");
           let title: string = "Error!";
           let content: string = "Username already Exist. Please select a new Username";
           let url: string = null;
           let primeBtn: string = null;
           let secBtn: string = "Ok";
           this.openDialog(title, content, url, primeBtn, secBtn);
-      });
+        });
     }
   }
   setUpFormData() {

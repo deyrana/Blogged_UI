@@ -7,7 +7,6 @@
     <div *ngIf="blog$ | async as blog">
       <mat-card class="blog-view-style">
         <mat-card-header>
-          <!-- <div mat-card-avatar ng-style="{'background-image': 'url('+ {{ this.var }} +{{ blog.image }} +')'}"></div> -->
           <img *ngIf = "blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}" class="example-header-image">
           <img *ngIf = "blog.image ===null " mat-card-avatar src="assets/images/user.png" class="example-header-image">
           <mat-card-title>{{blog.header}}</mat-card-title>

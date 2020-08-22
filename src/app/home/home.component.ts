@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   user: User;
   blogs: Blog[] = [];
   blogs$: Observable<Blog[]>;
+  searchText: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Blog>;
@@ -67,6 +68,10 @@ export class HomeComponent implements OnInit {
     if (this.dataSource) {
       this.dataSource.disconnect();
     }
+  }
+
+  public doFilter = (value: string) => {
+    this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
 }

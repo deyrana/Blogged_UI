@@ -32,7 +32,7 @@ export class AddBlogComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   genre = [
-    'Adventure', 'Horror', 'Thriller', 'Mystery', 'Gore'
+    // 'Adventure', 'Horror', 'Thriller', 'Mystery', 'Gore'
   ];
   selectedGenre = [
   ];
@@ -40,7 +40,7 @@ export class AddBlogComponent implements OnInit {
 
 
   constructor(private formBuilder: FormBuilder, private route: Router,
-    private blogService: BlogService, private dialog: MatDialog) { }
+    private blogService: BlogService, private dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit(): void {
     this.headerTitle = "Add Blog";
@@ -54,9 +54,16 @@ export class AddBlogComponent implements OnInit {
       content: [null, Validators.required],
     });
 
-    this.filteredOptions = this.AddBlogForm.get('genres').valueChanges.pipe(
-      startWith(null),
-      map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
+    this.userService.getCodeMapByCat('Genre').subscribe((response) => {
+      this.genre = response;
+      this.filteredOptions = this.AddBlogForm.get('genres').valueChanges.pipe(
+        startWith(null),
+        map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
+    });
+
+    // this.filteredOptions = this.AddBlogForm.get('genres').valueChanges.pipe(
+    //   startWith(null),
+    //   map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
   }
 
   private _filter(value: string): string[] {
@@ -67,12 +74,12 @@ export class AddBlogComponent implements OnInit {
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;
-    if (this.genre.indexOf(value.toLowerCase().trim()) === -1) {
-      console.log(value.toLowerCase().trim())
+    if (this.genre.indexOf(value.trim()) === -1) {
+      console.log(value.trim())
       return;
     }
 
-    if ((value || '').trim()) {
+    if ((value || '').trim() && this.selectedGenre.indexOf(value.trim()) === -1) {
       this.selectedGenre.push(value.trim());
     }
 
@@ -90,7 +97,9 @@ export class AddBlogComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.selectedGenre.push(event.option.value);
+    if (this.selectedGenre.indexOf(event.option.value.trim()) === -1) {
+      this.selectedGenre.push(event.option.value);
+    }
     this.AddBlogForm.get('genres').setValue(null);
     this.genreInput.nativeElement.value = '';
   }
