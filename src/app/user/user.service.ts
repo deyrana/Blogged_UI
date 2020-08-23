@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UserComplete } from 'src/app/user/user-complete.model';
 import { environment } from 'src/environments/environment';
+import { Blog } from '../models/blog.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,14 @@ export class UserService {
     let params = new HttpParams();
     params = params.append('category', cat);
     return this.http.get<string[]>(environment.restApi + 'code', {
+      params: params
+    });
+  }
+
+  getUserBlogs(username: string): Observable<Blog[]>{
+    let params = new HttpParams();
+    params = params.append('username', username);
+    return this.http.get<Blog[]>(environment.restApi + 'users/blogs', {
       params: params
     });
   }

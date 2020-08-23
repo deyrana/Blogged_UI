@@ -1,51 +1,49 @@
-import { Component, OnInit, EventEmitter, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
-import { User } from '../user/user.model';
-import { BlogService } from 'src/app/services/blog.service';
-import { Blog } from '../models/blog.model';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { UserService } from '../user/user.service';
+import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { Blog } from '../models/blog.model';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-my-blogs',
+  templateUrl: './my-blogs.component.html',
+  styleUrls: ['./my-blogs.component.css']
 })
-export class HomeComponent implements OnInit {
+export class MyBlogsComponent implements OnInit {
 
   headerTitle: string;
   backdrop: boolean;
   navbarMode: string;
-  user: User;
+  username: string;
   blogs: Blog[] = [];
   blogs$: Observable<Blog[]>;
   searchText: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Blog>;
-  var: string;
 
-  constructor(private route: Router, private blogService: BlogService,
-    private changeDetectorRef: ChangeDetectorRef) { }
+  constructor(private userService: UserService, private authService: AuthService,
+    private changeDetectorRef: ChangeDetectorRef, private route: Router) { }
 
   ngOnInit(): void {
-    this.headerTitle = "Home";
+    this.headerTitle = "My Blogs";
     this.backdrop = true;
     this.navbarMode = "over";
-    this.var = "data:image/jpeg;base64,";
+    this.username = this.authService.getUser();
     this.fetchBlogs();
-
   }
 
   fetchBlogs() {
-    this.blogService.getAllBlogs().subscribe((response) => {
+    this.userService.getUserBlogs(this.username).subscribe((response) => {
       console.log('Blogs - ' + response.length);
       this.blogs = response;
       this.setDatasource();
     })
   }
-  
+
   setDatasource() {
     this.dataSource = new MatTableDataSource<Blog>(this.blogs);
     this.changeDetectorRef.detectChanges();
@@ -58,10 +56,6 @@ export class HomeComponent implements OnInit {
       content = content.substring(0, 540) + '...';
     }
     return content;
-  }
-
-  moveToAddScreen() {
-    this.route.navigate(['blogs/add']);
   }
 
   ngOnDestroy() {

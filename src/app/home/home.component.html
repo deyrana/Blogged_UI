@@ -5,15 +5,18 @@
   <mat-drawer-content>
     <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
 
-    <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" class=" box-design" [pageSizeOptions]="[3, 5, 10, 25, 100]"
+    <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" class=" box-design" [pageSizeOptions]="[5, 10, 25, 100]"
       [pageSize]="5"></mat-paginator>
 
     <div class="blog-view-style box-design">
       <!-- Filter -->
       <mat-form-field class="filter" appearance="outline">
         <mat-label> Search </mat-label>
-        <input matInput type="search" [(ngModel)]="searchText" (keyup)="doFilter($event.target.value)"
+        <input matInput [(ngModel)]="searchText" (keyup)="doFilter($event.target.value)"
           placeholder="Enter Text">
+          <button mat-icon-button title="clear" type="button" (click) = "clearSearch()" matSuffix>
+          <mat-icon>clear</mat-icon>
+        </button>
       </mat-form-field>
       <!-- End -->
 
@@ -33,7 +36,7 @@
             </mat-card-header>
             <mat-card-content>
               <p appHighlight [searchedWord]="searchText" [content]="truncateContent(blog.contentStr)"
-                [classToApply]="'font-weight-bold background-color-yellow'" [setTitle]="'true'">
+                [classToApply]="'font-weight-bold'" [setTitle]="'true'">
                 {{truncateContent(blog.contentStr)}}
               </p>
             </mat-card-content>

@@ -49,6 +49,11 @@
     color: white;
   }
 
+  .delete{
+    position: absolute;
+    margin-left: 990px;
+  }
+
   button{
     outline:none;
     border: none;

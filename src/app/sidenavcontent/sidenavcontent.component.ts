@@ -18,7 +18,7 @@ export class SidenavcontentComponent implements OnInit {
 
   ngOnInit(): void {
     this.imgUrl = "assets/images/user.png";
-    this.username = localStorage.getItem('token');
+    this.username = this.authService.getUser();
     this.fetchUser();
   }
 
@@ -35,6 +35,10 @@ export class SidenavcontentComponent implements OnInit {
 
   navigateToAccount() {
     this.route.navigate(['user/detail'], { queryParams: { userId: this.userid, username: this.username } });
+  }
+
+  navigateToBlogs(){
+    this.route.navigate(['user/blogs'])
   }
 
   logout() {

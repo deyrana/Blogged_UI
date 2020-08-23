@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AddBlogComponent } from './add-blog/add-blog.component';
 import { UserComponent } from './user/user.component';
 import { ViewBlogComponent } from './view-blog/view-blog.component';
+import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,7 +17,9 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'blogs/add', component: AddBlogComponent, canActivate: [AuthGuard] },
   { path: 'user/detail', component: UserComponent, canActivate: [AuthGuard] },
-  { path: 'blogs/:id', component: ViewBlogComponent}
+  { path: 'blogs/:id', component: ViewBlogComponent, canActivate: [AuthGuard]},
+  { path: 'user/blogs', component: MyBlogsComponent, canActivate: [AuthGuard]},
+  { path: '**', component: LoginComponent}
 ];
 
 @NgModule({
