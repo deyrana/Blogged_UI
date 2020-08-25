@@ -23,6 +23,7 @@ export class RegistrationComponent implements OnInit {
   profilePic: string = "assets/images/user.png";
   hide: boolean = true;
   profileImage: File;
+  pageload: boolean = false;
 
   // Values for Chip Autocomplete 
   @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
@@ -115,14 +116,17 @@ export class RegistrationComponent implements OnInit {
   submit() {
     this.RegForm.get('genres').setValue(this.selectedGenre);
     if (this.RegForm.valid) {
+      this.pageload = true;
       const formValues = this.setUpFormData();
       this.userService.saveUserData(formValues).subscribe(
         (response) => {
+          this.pageload = false;
           if (response.status === 200) {
             this.login();
           }
         },
         error => {
+          this.pageload = false;
           console.log("Failue");
           let title: string = "Error!";
           let content: string = "Username already Exist. Please select a new Username";
@@ -185,6 +189,12 @@ export class RegistrationComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  EnterSubmit(event){
+    if(event.keyCode === 13){
+      this.submit();
+    }
   }
 
 }

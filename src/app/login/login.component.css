@@ -54,3 +54,10 @@ img {
     left: 43.5%;
     margin-top: 90px;
   }
+
+    
+.spinner{
+  position: absolute;
+  margin-top: 200px;
+  margin-left: 610px;
+}

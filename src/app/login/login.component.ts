@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   hide = true;
   validUser: boolean = false;
   profilePic: string = "assets/images/user.png";
+  pageload: boolean = false;
   constructor(private formBuilder: FormBuilder, private loginService: LoginService,
     private router: Router, private dialog: MatDialog) { }
 
@@ -28,15 +29,18 @@ export class LoginComponent implements OnInit {
 
   submit() {
     if (this.LoginForm.valid) {
+      this.pageload = true;
       const formValues = this.setUpFormData();
       this.loginService.validateCred(formValues).subscribe(
         (response) => {
           console.log(response.status);
           console.log(response.body);
           this.validUser = response.body;
+          this.pageload = false;
           this.login();
         },
         error => {
+          this.pageload = false;
           let title: string = "Message";
           let content: string = "You are not a valid user. Please SignUp to continue";
           let url: string = "/signup";
@@ -89,6 +93,12 @@ export class LoginComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  EnterSubmit(event){
+    if(event.keyCode === 13){
+      this.submit();
+    }
   }
 
 }

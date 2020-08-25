@@ -43,8 +43,9 @@ export class HomeComponent implements OnInit {
     this.blogService.getAllBlogs().subscribe((response) => {
       console.log('Blogs - ' + response.length);
       this.blogs = response;
-      this.setDatasource();
       this.pageload = true;
+      this.setDatasource();
+      
     })
   }
 

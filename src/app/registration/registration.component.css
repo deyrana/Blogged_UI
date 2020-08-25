@@ -56,3 +56,9 @@
     text-align: center;
     font-size: 30px;
   }
+
+  .spinner{
+    position: absolute;
+    margin-top: 200px;
+    margin-left: 610px;
+  }
