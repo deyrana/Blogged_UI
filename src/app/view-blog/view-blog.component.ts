@@ -27,6 +27,7 @@ export class ViewBlogComponent implements OnInit {
   rlTggl: boolean;
   username: string;
   blogid: number;
+  pageload: boolean = false;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService, private authService: AuthService,
     private dialog: MatDialog, private router: Router) { }

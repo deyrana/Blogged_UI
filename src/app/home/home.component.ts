@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   blogs: Blog[] = [];
   blogs$: Observable<Blog[]>;
   searchText: string;
+  pageload: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Blog>;
@@ -43,9 +44,10 @@ export class HomeComponent implements OnInit {
       console.log('Blogs - ' + response.length);
       this.blogs = response;
       this.setDatasource();
+      this.pageload = true;
     })
   }
-  
+
   setDatasource() {
     this.dataSource = new MatTableDataSource<Blog>(this.blogs);
     this.changeDetectorRef.detectChanges();
@@ -74,7 +76,7 @@ export class HomeComponent implements OnInit {
     this.dataSource.filter = value.trim().toLocaleLowerCase();
   }
 
-  public clearSearch(){
+  public clearSearch() {
     this.dataSource.filter = "";
     this.searchText = "";
   }

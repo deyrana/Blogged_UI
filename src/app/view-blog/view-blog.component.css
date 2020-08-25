@@ -58,3 +58,10 @@
     outline:none;
     border: none;
   }
+
+  
+.spinner{
+  position: absolute;
+  margin-top: 200px;
+  margin-left: 610px;
+}

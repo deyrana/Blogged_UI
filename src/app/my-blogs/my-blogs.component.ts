@@ -21,6 +21,7 @@ export class MyBlogsComponent implements OnInit {
   blogs: Blog[] = [];
   blogs$: Observable<Blog[]>;
   searchText: string;
+  pageLoad: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Blog>;
@@ -40,6 +41,7 @@ export class MyBlogsComponent implements OnInit {
     this.userService.getUserBlogs(this.username).subscribe((response) => {
       console.log('Blogs - ' + response.length);
       this.blogs = response;
+      this.pageLoad = true;
       this.setDatasource();
     })
   }

@@ -5,10 +5,14 @@
     <mat-drawer-content>
         <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
 
-        <mat-paginator style="width: 80%; margin-left: auto; margin-right: auto;" class=" box-design"
+        <div *ngIf = "!this.pageLoad" class="spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <mat-paginator  *ngIf = "this.pageLoad" style="width: 80%; margin-left: auto; margin-right: auto;" class=" box-design"
             [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5"></mat-paginator>
 
-        <div class="blog-view-style box-design">
+        <div  *ngIf = "this.pageLoad" class="blog-view-style box-design">
             <!-- Filter -->
             <mat-form-field class="filter" appearance="outline">
                 <mat-label> Search </mat-label>
@@ -20,7 +24,7 @@
             </mat-form-field>
             <!-- End -->
 
-            <div *ngFor="let blog of blogs$ | async">
+            <div *ngFor="let blog of blogs">
                 <a [routerLink]="['/blogs', blog.blogId]" style="text-decoration:none">
                     <mat-card class="blogs box-design">
                         <mat-card-header>

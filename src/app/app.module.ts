@@ -38,6 +38,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ViewBlogComponent } from './view-blog/view-blog.component';
 import { HighlightDirective } from './directive/highlight.directive';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
+import { WithLoadingPipe } from './pipes/with-loading.pipe';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { MyBlogsComponent } from './my-blogs/my-blogs.component';
     FooterComponent,
     ViewBlogComponent,
     HighlightDirective,
-    MyBlogsComponent
+    MyBlogsComponent,
+    WithLoadingPipe
   ],
   imports: [
     BrowserModule,
