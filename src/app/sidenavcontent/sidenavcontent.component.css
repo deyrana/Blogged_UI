@@ -27,9 +27,14 @@
   }
 
   .navbar-btn{
-    background: transparent !important;
+    background: #e9e8e8;
     border: none !important;
-    font-size: 19.5px;
+    font-size: 19px;
     outline:none;
     cursor: pointer;
+    width: 80%;
+  }
+
+  button:hover{
+    background: #bebcbc;
   }
