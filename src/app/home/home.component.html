@@ -24,7 +24,7 @@
         </mat-form-field>
         <!-- End -->
 
-        <div *ngFor="let blog of blogs">
+        <div *ngFor="let blog of blogs$ | async">
           <a [routerLink]="['/blogs', blog.blogId]" style="text-decoration:none">
             <mat-card class="blogs box-design">
               <mat-card-header>
