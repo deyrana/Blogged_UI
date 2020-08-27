@@ -1,4 +1,4 @@
-<mat-drawer-container class="example-container" [hasBackdrop]="backdrop">
+<mat-drawer-container class="example-container bg" [hasBackdrop]="backdrop">
     <mat-drawer #drawer class="navbar-style" [mode]="navbarMode">
         <app-sidenavcontent></app-sidenavcontent>
     </mat-drawer>
@@ -40,7 +40,7 @@
                 <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Header</mat-label>
                     <textarea matInput formControlName="header" placeholder="Enter Header for the Blog Here"></textarea>
-                    <mat-error *ngIf="AddBlogForm.controls.header.invalid">
+                    <mat-error *ngIf="AddBlogForm.controls.header.invalid && AddBlogForm.controls.header.touched">
                         <span *ngIf="AddBlogForm.controls.header.errors.required">This field is mandatory.</span>
                     </mat-error>
                 </mat-form-field>
@@ -49,7 +49,7 @@
                     <mat-label>Content</mat-label>
                     <textarea class="contentStyle" matInput formControlName="content"
                         placeholder="Enter Content for the Blog Here"></textarea>
-                    <mat-error *ngIf=" AddBlogForm.controls.content.invalid">
+                    <mat-error *ngIf=" AddBlogForm.controls.content.invalid &&  AddBlogForm.controls.content.touched">
                         <span *ngIf="AddBlogForm.controls.content.errors.required">This field is mandatory.</span>
                     </mat-error>
                 </mat-form-field>

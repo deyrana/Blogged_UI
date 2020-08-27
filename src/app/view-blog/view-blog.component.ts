@@ -45,6 +45,7 @@ export class ViewBlogComponent implements OnInit {
     this.favTggl = false;
     this.rlTggl = false;
     this.username = this.authService.getUser();
+    console.log(this.username);
   }
 
   LikedBtn() {

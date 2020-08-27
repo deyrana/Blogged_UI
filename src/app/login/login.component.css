@@ -1,15 +1,15 @@
 .form-container{
 
-    width: 300px;
+    /* width: 300px; */
     /* margin: 0 auto; */
     padding: 30px;
     /* position: relative; For the submit button positioning */
-      position: absolute;
+      /* position: absolute;
       top: 37%;
       left: 45%;
       margin-top: -100px;
       margin-left: -100px;
-      
+       */
 
     /* Styles */
     box-shadow: 
@@ -42,17 +42,13 @@ img {
 
   .headerFont{
     font-family: 'Playfair Display', serif; 
-    position: fixed;
     font-size: 50px;
-    left: 41%;
-    margin-top: 36px;
+    padding: 20px;
   }
 
   .LoginHeader{
-    position: fixed;
     font-size: 30px;
-    left: 43.5%;
-    margin-top: 90px;
+    padding: 5px;
   }
 
     
