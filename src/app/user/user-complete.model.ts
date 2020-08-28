@@ -6,5 +6,4 @@ export class UserComplete {
     dateOfBirth?: Date;
     genres?: string;
     image?: string;
-    blogCount?: number;
 }

@@ -24,6 +24,7 @@ export class ViewBlogComponent implements OnInit {
   styleVal: any;
   likedTggl: boolean;
   favTggl: boolean;
+  favVal: boolean;
   rlTggl: boolean;
   username: string;
   blogid: number;
@@ -33,18 +34,24 @@ export class ViewBlogComponent implements OnInit {
     private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
+    this.username = this.authService.getUser();
     this.route.params.subscribe((response) => {
       this.blogid = response.id;
       this.blog$ = this.blogService.getBlog(response.id);
+
     })
     this.headerTitle = "View Blog";
     this.backdrop = true;
     this.navbarMode = "over";
     this.var = "data:image/jpeg;base64,";
+    this.blogService.getFavBlog(this.username, this.blogid).subscribe((response) => {
+      this.favTggl = response;
+      this.favVal = this.favTggl;
+    });
+
     this.likedTggl = false;
-    this.favTggl = false;
     this.rlTggl = false;
-    this.username = this.authService.getUser();
+
     console.log(this.username);
   }
 
@@ -95,6 +102,28 @@ export class ViewBlogComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
+  }
+
+  ngOnDestroy() {
+    console.log("OnDestro called");
+    console.log("Username - " + this.username);
+    this.setFav();
+  }
+  setFav() {
+    if (this.favTggl != this.favVal) {
+      if (this.favTggl) {
+        let formData = {};
+        formData['username'] = this.username;
+        formData['blog_id'] = this.blogid;
+        this.blogService.setFavBlog(formData).subscribe(() => {
+          console.log("Blog has been marked in Fav List");
+        })
+      } else if(!this.favTggl){
+        this.blogService.deleteFavBlog(this.username, this.blogid).subscribe(() => {
+          console.log("Blog has been removed from your Fav List");
+        });
+      }
+    }
   }
 
 }

@@ -33,6 +33,22 @@ export class UserService {
     });
   }
 
+  getUserBlogCount(username: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('username', username);
+    return this.http.get<any>(environment.restApi + 'users/blogsCount', {
+      params: params
+    });
+  }
+
+  getFavBlogCount(username: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.append('username', username);
+    return this.http.get<any>(environment.restApi + 'blogs/getFavCount', {
+      params: params
+    });
+  }
+
   getCodeMapByCat(cat: string): Observable<string[]> {
     let params = new HttpParams();
     params = params.append('category', cat);
@@ -41,7 +57,7 @@ export class UserService {
     });
   }
 
-  getUserBlogs(username: string): Observable<Blog[]>{
+  getUserBlogs(username: string): Observable<Blog[]> {
     let params = new HttpParams();
     params = params.append('username', username);
     return this.http.get<Blog[]>(environment.restApi + 'users/blogs', {

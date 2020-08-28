@@ -18,6 +18,8 @@ export class UserComponent implements OnInit {
   username: string;
   imgUrl: string
   userCompleteData: UserComplete;
+  blogCount: number;
+  favBlogCount: number;
   pageload: boolean = false;
 
   constructor(private route: ActivatedRoute, private userService: UserService, private router: Router,
@@ -32,11 +34,23 @@ export class UserComponent implements OnInit {
       this.userId = params['userId'];
       this.username = params['username'];
       this.fetchUserCompleteData(this.userId, this.username);
+      this.fetchUserBlogCount(this.username);
+      this.fetchFavBlogCount(this.username);
+    });
+  }
+  fetchFavBlogCount(username: string) {
+    this.userService.getFavBlogCount(username).subscribe((response) => {
+      this.favBlogCount = response;
+    })
+  }
+  fetchUserBlogCount(username: string) {
+    this.userService.getUserBlogCount(username).subscribe((response) => {
+      this.blogCount = response;
     });
   }
   fetchUserCompleteData(userId: string, username: string) {
 
-    if (this.authService.getUser() === this.username) {
+    if (this.authService.getUser().toLowerCase() === this.username.toLowerCase()) {
       this.userService.getUserCompleteData(userId, username).subscribe((response) => {
         this.userCompleteData = response;
         this.getUserImage();

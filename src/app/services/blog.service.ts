@@ -30,9 +30,31 @@ export class BlogService {
 
   deleteBlog(blogid: number): Observable<any> {
     return this.http.delete<any>(environment.restApi + 'blogs/' + blogid).pipe(
-      tap((data)=>{
+      tap((data) => {
         JSON.parse(data);
       })
     );
+  }
+
+  setFavBlog(formData: any): Observable<any> {
+    return this.http.post<any>(environment.restApi + 'blogs/favourite', formData);
+  }
+
+  deleteFavBlog(username: any, blogid: any): Observable<any> {
+    let params = new HttpParams();
+    params = params.append("username", username);
+    params = params.append("blogid", blogid);
+    return this.http.delete<any>(environment.restApi + 'blogs/getfav', {
+      params : params
+    });
+  }
+
+  getFavBlog(username: any, blogid: any): Observable<boolean> {
+    let params = new HttpParams();
+    params = params.append("username", username);
+    params = params.append("blogid", blogid);
+    return this.http.get<boolean>(environment.restApi + "blogs/getfav", {
+      params: params
+    })
   }
 }
