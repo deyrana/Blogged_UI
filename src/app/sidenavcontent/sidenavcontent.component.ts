@@ -37,12 +37,16 @@ export class SidenavcontentComponent implements OnInit {
     this.route.navigate(['user/detail'], { queryParams: { userId: this.userid, username: this.username } });
   }
 
-  navigateToHome(){
+  navigateToHome() {
     this.route.navigate(['home']);
   }
 
-  navigateToBlogs(){
+  navigateToBlogs() {
     this.route.navigate(['user/blogs'])
+  }
+
+  navigateToFavBlogs() {
+    this.route.navigate(['user/favBlogs'])
   }
 
   logout() {

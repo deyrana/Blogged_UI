@@ -64,4 +64,12 @@ export class UserService {
       params: params
     });
   }
+
+  getFavBlogs(username: string):Observable<Blog[]> {
+    let params = new HttpParams();
+    params = params.append('username', username);
+    return this.http.get<Blog[]>(environment.restApi + 'blogs/getFavBlogs', {
+      params: params
+    });
+  }
 }

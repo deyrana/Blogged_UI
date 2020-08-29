@@ -40,6 +40,7 @@ import { HighlightDirective } from './directive/highlight.directive';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 import { WithLoadingPipe } from './pipes/with-loading.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { NgxImageCompressService } from 'ngx-image-compress';
     ViewBlogComponent,
     HighlightDirective,
     MyBlogsComponent,
-    WithLoadingPipe
+    WithLoadingPipe,
+    FavouriteBlogsComponent
   ],
   imports: [
     BrowserModule,

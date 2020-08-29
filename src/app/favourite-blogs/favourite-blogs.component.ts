@@ -1,26 +1,26 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { UserService } from '../user/user.service';
-import { AuthService } from '../services/auth.service';
-import { Observable } from 'rxjs';
-import { Blog } from '../models/blog.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { Blog } from '../models/blog.model';
+import { Observable } from 'rxjs';
+import { UserService } from '../user/user.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-my-blogs',
-  templateUrl: './my-blogs.component.html',
-  styleUrls: ['./my-blogs.component.css']
+  selector: 'app-favourite-blogs',
+  templateUrl: './favourite-blogs.component.html',
+  styleUrls: ['./favourite-blogs.component.css']
 })
-export class MyBlogsComponent implements OnInit {
+export class FavouriteBlogsComponent implements OnInit {
 
   headerTitle: string;
   backdrop: boolean;
   navbarMode: string;
   username: string;
+  searchText: string;
   blogs: Blog[] = [];
   blogs$: Observable<Blog[]>;
-  searchText: string;
   pageLoad: boolean = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -30,19 +30,18 @@ export class MyBlogsComponent implements OnInit {
     private changeDetectorRef: ChangeDetectorRef, private route: Router) { }
 
   ngOnInit(): void {
-    this.headerTitle = "My Blogs";
+    this.headerTitle = "Favourite Blogs";
     this.backdrop = true;
     this.navbarMode = "over";
     this.username = this.authService.getUser();
-    this.fetchBlogs();
+    this.fetchFavBlogs();
   }
-
-  fetchBlogs() {
-    this.userService.getUserBlogs(this.username).subscribe((response) => {
+  fetchFavBlogs() {
+    this.userService.getFavBlogs(this.username).subscribe((response) => {
       this.blogs = response;
       this.pageLoad = true;
       this.setDatasource();
-    })
+    });
   }
 
   setDatasource() {
@@ -70,7 +69,7 @@ export class MyBlogsComponent implements OnInit {
     this.blogs = this.dataSource.data;
   }
 
-  public clearSearch(){
+  public clearSearch() {
     this.dataSource.filter = "";
     this.searchText = "";
   }
