@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @Component({
   selector: 'app-registration',
@@ -41,7 +42,8 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private userService: UserService, private datepipe: DatePipe,
-    private router: Router, private dialog: MatDialog) {
+    private router: Router, private dialog: MatDialog,
+    private imageCompress: NgxImageCompressService) {
   }
 
   ngOnInit(): void {
@@ -69,11 +71,31 @@ export class RegistrationComponent implements OnInit {
       this.profileImage = e.target.files[0];
       reader.onload = (event: any) => {
         this.profilePic = event.target.result;
+        // this.compressFile(this.profilePic, this.profileImage['name'])
         this.RegForm.patchValue({
           image: reader.result
         });
       }
     }
+  }
+
+  compressFile(image, fileName) {
+    var orientation = -1;
+    const sizeOfOriginalImage = this.imageCompress.byteCount(image) / (2048 * 2048);
+    console.warn('Size in bytes is now:', sizeOfOriginalImage);
+    this.imageCompress.compressFile(image, orientation, 50, 50).then(
+      result => {
+        // this.imgResultAfterCompress = result;
+        // this.localCompressedURl = result;
+        // this.sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024)
+        console.warn('Size in bytes after compression:', this.imageCompress.byteCount(result) / (2048 * 2048));
+        // create file from byte
+        const imageName = fileName;
+        // call method that creates a blob from dataUri
+        // const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
+        //imageFile created below is the new compressed file which can be send to API in form data
+        this.profileImage = new File([result], imageName, { type: 'image/jpeg' });
+      });
   }
 
   private _filter(value: string): string[] {
@@ -191,8 +213,8 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  EnterSubmit(event){
-    if(event.keyCode === 13){
+  EnterSubmit(event) {
+    if (event.keyCode === 13) {
       this.submit();
     }
   }

@@ -39,6 +39,7 @@ import { ViewBlogComponent } from './view-blog/view-blog.component';
 import { HighlightDirective } from './directive/highlight.directive';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 import { WithLoadingPipe } from './pipes/with-loading.pipe';
+import { NgxImageCompressService } from 'ngx-image-compress';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { WithLoadingPipe } from './pipes/with-loading.pipe';
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     DatePipe,
-    AuthGuard
+    AuthGuard,
+    NgxImageCompressService
   ],
   bootstrap: [AppComponent]
 })

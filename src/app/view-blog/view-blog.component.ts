@@ -7,7 +7,8 @@ import { AuthService } from '../services/auth.service';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { Comments } from '../models/comments.model';
 
 @Component({
   selector: 'app-view-blog',
@@ -26,9 +27,11 @@ export class ViewBlogComponent implements OnInit {
   favTggl: boolean;
   favVal: boolean;
   rlTggl: boolean;
+  cmtTggl:boolean = false;
   username: string;
   blogid: number;
   pageload: boolean = false;
+  comments$: Observable<Comments[]>;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService, private authService: AuthService,
     private dialog: MatDialog, private router: Router) { }
@@ -40,6 +43,7 @@ export class ViewBlogComponent implements OnInit {
       this.blog$ = this.blogService.getBlog(response.id);
 
     })
+    this.comments$ = this.blogService.getComments(this.blogid);
     this.headerTitle = "View Blog";
     this.backdrop = true;
     this.navbarMode = "over";
@@ -48,11 +52,8 @@ export class ViewBlogComponent implements OnInit {
       this.favTggl = response;
       this.favVal = this.favTggl;
     });
-
     this.likedTggl = false;
     this.rlTggl = false;
-
-    console.log(this.username);
   }
 
   LikedBtn() {
@@ -105,8 +106,6 @@ export class ViewBlogComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log("OnDestro called");
-    console.log("Username - " + this.username);
     this.setFav();
   }
   setFav() {
@@ -124,6 +123,25 @@ export class ViewBlogComponent implements OnInit {
         });
       }
     }
+  }
+
+  commentBt(){
+    this.cmtTggl = !this.cmtTggl;
+  }
+
+  postComment(formvalue: any){
+    this.cmtTggl = false;
+    let newCmt: Comments = new Comments(formvalue.txt, this.blogid, this.username);
+    this.blogService.saveComment(newCmt).subscribe(() =>{
+    });
+    this.comments$ = this.comments$.pipe(map(cmtList => {
+      cmtList.unshift(newCmt);
+      return cmtList;
+    }));
+  }
+
+  navigateToHome(){
+    this.router.navigate(['/home']);
   }
 
 }

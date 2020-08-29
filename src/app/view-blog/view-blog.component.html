@@ -32,19 +32,32 @@
         <mat-card-actions>
           <button mat-raised-button title="Like Blog" [ngClass]="likedTggl ? 'blue' : ''" (click)="LikedBtn()"><i
               class="material-icons">thumb_up_alt</i></button>
-          <button mat-raised-button title="Comment"><i class="material-icons">comment</i></button>
+          <button mat-raised-button title="Comment"><i class="material-icons" (click)="commentBt()">comment</i></button>
           <button mat-raised-button title="Favourite" [ngClass]="favTggl ? 'red' : ''" (click)="favBtn()"><i
               class="material-icons">star</i></button>
           <button mat-raised-button title="Read List" [ngClass]="rlTggl ? 'yellow' : ''" (click)="readListBtn()"><i
               class="material-icons">chrome_reader_mode</i></button>
         </mat-card-actions>
       </mat-card>
+      <form #commentForm="ngForm" class="blog-view-style commentSyle" (ngSubmit)="postComment(commentForm.value)" *ngIf="cmtTggl">
+        <mat-form-field class="inpStl"  appearance="outline">
+          <mat-label> Comment </mat-label>
+          <textarea name="txt" matInput placeholder="Enter Comment" ngModel> </textarea>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Post</button>
+      </form>
+      <div class="blog-view-style commentSyle" *ngFor = "let comment of (comments$ | async)">
+        <div><strong>{{comment.username}} :</strong> {{comment.comment}}</div>
+      </div>
 
       <div class="spinner" *ngIf="blog.loading">
         <mat-spinner></mat-spinner>
       </div>
 
     </div>
+
+    <button mat-fab class="add-btn" (click) = "navigateToHome()" color="primary" type="button"><i
+      class="material-icons">arrow_back</i></button>
 
   </mat-drawer-content>
 </mat-drawer-container>

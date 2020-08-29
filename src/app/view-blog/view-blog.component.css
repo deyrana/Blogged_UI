@@ -65,3 +65,20 @@
   margin-top: 200px;
   margin-left: 610px;
 }
+
+.commentSyle{
+  padding: 10px;
+  /* display: inline; */
+  background-color: #ffffff;
+}
+
+.inpStl{
+  width: 100%;
+}
+
+.add-btn{
+  position: fixed;
+  bottom: 30px;
+  right:100px; 
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}

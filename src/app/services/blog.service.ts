@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Blog } from 'src/app/models/blog.model';
 import { environment } from 'src/environments/environment';
 import { map, tap } from 'rxjs/operators';
+import { Comments } from 'src/app/models/comments.model';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class BlogService {
     params = params.append("username", username);
     params = params.append("blogid", blogid);
     return this.http.delete<any>(environment.restApi + 'blogs/getfav', {
-      params : params
+      params: params
     });
   }
 
@@ -56,5 +57,13 @@ export class BlogService {
     return this.http.get<boolean>(environment.restApi + "blogs/getfav", {
       params: params
     })
+  }
+
+  getComments(blogid: any): Observable<Comments[]> {
+    return this.http.get<Comments[]>(environment.restApi + 'blogs/comments/' + blogid);
+  }
+
+  saveComment(formData: any): Observable<any>{
+    return this.http.post<any>(environment.restApi + 'blogs/comments', formData);
   }
 }
