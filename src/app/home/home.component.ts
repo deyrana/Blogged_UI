@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   dataSource: MatTableDataSource<Blog>;
-  var: string;
 
   constructor(private route: Router, private blogService: BlogService,
     private changeDetectorRef: ChangeDetectorRef) { }
@@ -34,7 +33,6 @@ export class HomeComponent implements OnInit {
     this.headerTitle = "Home";
     this.backdrop = true;
     this.navbarMode = "over";
-    this.var = "data:image/jpeg;base64,";
     this.fetchBlogs();
 
   }

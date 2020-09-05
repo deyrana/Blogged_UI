@@ -53,19 +53,12 @@ export class UserComponent implements OnInit {
     if (this.authService.getUser().toLowerCase() === this.username.toLowerCase()) {
       this.userService.getUserCompleteData(userId, username).subscribe((response) => {
         this.userCompleteData = response;
-        this.getUserImage();
+        this.imgUrl = this.userCompleteData.image;
         this.pageload = true;
       });
     } else {
       this.authService.logout();
       this.router.navigate(['/login']);
-    }
-  }
-
-  getUserImage() {
-    let imgBin: string = this.userCompleteData.image;
-    if (imgBin != null) {
-      this.imgUrl = 'data:image/jpeg;base64,' + imgBin;
     }
   }
 

@@ -41,6 +41,7 @@ import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 import { WithLoadingPipe } from './pipes/with-loading.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.component';
+import { IconModalComponent } from './icon-modal/icon-modal.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.compo
     HighlightDirective,
     MyBlogsComponent,
     WithLoadingPipe,
-    FavouriteBlogsComponent
+    FavouriteBlogsComponent,
+    IconModalComponent
   ],
   imports: [
     BrowserModule,

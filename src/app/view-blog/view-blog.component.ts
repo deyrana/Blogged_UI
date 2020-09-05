@@ -21,7 +21,6 @@ export class ViewBlogComponent implements OnInit {
   backdrop: boolean;
   navbarMode: string;
   blog$: Observable<Blog>;
-  var: string;
   styleVal: any;
   likedTggl: boolean;
   favTggl: boolean;
@@ -47,7 +46,6 @@ export class ViewBlogComponent implements OnInit {
     this.headerTitle = "View Blog";
     this.backdrop = true;
     this.navbarMode = "over";
-    this.var = "data:image/jpeg;base64,";
     this.blogService.getFavBlog(this.username, this.blogid).subscribe((response) => {
       this.favTggl = response;
       this.favVal = this.favTggl;

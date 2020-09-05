@@ -32,7 +32,6 @@ export class AddBlogComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   genre = [
-    // 'Adventure', 'Horror', 'Thriller', 'Mystery', 'Gore'
   ];
   selectedGenre = [
   ];

@@ -72,4 +72,8 @@ export class UserService {
       params: params
     });
   }
+
+  fetchAllIcons(): Observable<any[]>{
+    return this.http.get<any[]>(environment.restApi + 'images');
+  }
 }

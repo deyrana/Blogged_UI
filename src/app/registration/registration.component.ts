@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { NgxImageCompressService } from 'ngx-image-compress';
+import { IconModalComponent } from '../icon-modal/icon-modal.component';
 
 @Component({
   selector: 'app-registration',
@@ -71,31 +72,11 @@ export class RegistrationComponent implements OnInit {
       this.profileImage = e.target.files[0];
       reader.onload = (event: any) => {
         this.profilePic = event.target.result;
-        // this.compressFile(this.profilePic, this.profileImage['name'])
         this.RegForm.patchValue({
           image: reader.result
         });
       }
     }
-  }
-
-  compressFile(image, fileName) {
-    var orientation = -1;
-    const sizeOfOriginalImage = this.imageCompress.byteCount(image) / (2048 * 2048);
-    console.warn('Size in bytes is now:', sizeOfOriginalImage);
-    this.imageCompress.compressFile(image, orientation, 50, 50).then(
-      result => {
-        // this.imgResultAfterCompress = result;
-        // this.localCompressedURl = result;
-        // this.sizeOFCompressedImage = this.imageCompress.byteCount(result) / (1024 * 1024)
-        console.warn('Size in bytes after compression:', this.imageCompress.byteCount(result) / (2048 * 2048));
-        // create file from byte
-        const imageName = fileName;
-        // call method that creates a blob from dataUri
-        // const imageBlob = this.dataURItoBlob(this.imgResultAfterCompress.split(',')[1]);
-        //imageFile created below is the new compressed file which can be send to API in form data
-        this.profileImage = new File([result], imageName, { type: 'image/jpeg' });
-      });
   }
 
   private _filter(value: string): string[] {
@@ -160,19 +141,10 @@ export class RegistrationComponent implements OnInit {
     }
   }
   setUpFormData() {
-    const uploadFormData = new FormData();
-    if (this.profileImage != null) {
-      uploadFormData.append('imageFile', this.profileImage, this.profileImage.name);
-    }
     let dob: string = this.datepipe.transform(this.RegForm.get('dob').value, 'yyyy-MM-dd');
     let user: User = new User(this.RegForm.get('name').value, this.RegForm.get('username').value,
-      this.RegForm.get('password').value, this.RegForm.get('email').value, dob, this.getValuesAsPipes(this.RegForm.get('genres').value));
-
-    uploadFormData.append("info", new Blob([JSON.stringify(user)],
-      {
-        type: "application/json"
-      }));
-    return uploadFormData;
+      this.RegForm.get('password').value, this.RegForm.get('email').value, dob, this.getValuesAsPipes(this.RegForm.get('genres').value), this.profilePic);
+    return user;
   }
   getValuesAsPipes(list: any): any {
     let str: string = '';
@@ -217,6 +189,15 @@ export class RegistrationComponent implements OnInit {
     if (event.keyCode === 13) {
       this.submit();
     }
+  }
+
+  openIconDialog(){
+    const dialogRef = this.dialog.open(IconModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed - '+result);
+      this.profilePic = result;
+    });
   }
 
 }

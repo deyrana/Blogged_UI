@@ -28,7 +28,7 @@
           <a [routerLink]="['/blogs', blog.blogId]" style="text-decoration:none">
             <mat-card class="blogs box-design">
               <mat-card-header>
-                <img *ngIf="blog.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.image }}"
+                <img *ngIf="blog.image !=null " mat-card-avatar src="{{ blog.image }}"
                   class="example-header-image">
                 <img *ngIf="blog.image ===null " mat-card-avatar src="assets/images/user.png"
                   class="example-header-image">

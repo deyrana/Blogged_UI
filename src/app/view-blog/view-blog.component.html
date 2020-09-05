@@ -8,7 +8,7 @@
     <div *ngIf="this.blog$ | withLoading | async as blog">
       <mat-card *ngIf="blog.value" class="blog-view-style">
         <mat-card-header>
-          <img *ngIf="blog.value.image !=null " mat-card-avatar src="{{ this.var }}{{ blog.value.image }}"
+          <img *ngIf="blog.value.image !=null " mat-card-avatar src="{{ blog.value.image }}"
             class="example-header-image">
           <img *ngIf="blog.value.image ===null " mat-card-avatar src="assets/images/user.png"
             class="example-header-image">
