@@ -98,3 +98,7 @@ mat-drawer-content {
   display: inline;
   margin-right: 12px;
 }
+
+.tinyMce{
+  padding-bottom: 20px;
+}

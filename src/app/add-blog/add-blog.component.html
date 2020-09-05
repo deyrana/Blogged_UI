@@ -4,7 +4,7 @@
     </mat-drawer>
     <mat-drawer-content>
         <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
-        <form [formGroup]="AddBlogForm" (submit) = "submit()">
+        <form [formGroup]="AddBlogForm" (submit)="submit()">
 
             <mat-form-field appearance="legacy" class="genreStyle">
                 <mat-chip-list #chipList aria-label="Genre selection">
@@ -28,13 +28,13 @@
 
 
                 </mat-chip-list>
-                
+
                 <mat-error *ngIf="AddBlogForm.controls.genres.touched && AddBlogForm.controls.genres.invalid">
                     <span *ngIf="AddBlogForm.controls.genres.errors.required">This field is mandatory.</span>
                 </mat-error>
-            
+
             </mat-form-field>
-            
+
 
             <div class="form-container">
                 <mat-form-field class="form-field" appearance="outline">
@@ -45,20 +45,23 @@
                     </mat-error>
                 </mat-form-field>
 
-                <mat-form-field class="form-field" appearance="outline">
+                <!-- <mat-form-field class="form-field" appearance="outline">
                     <mat-label>Content</mat-label>
                     <textarea class="contentStyle" matInput formControlName="content"
                         placeholder="Enter Content for the Blog Here"></textarea>
+
                     <mat-error *ngIf=" AddBlogForm.controls.content.invalid &&  AddBlogForm.controls.content.touched">
                         <span *ngIf="AddBlogForm.controls.content.errors.required">This field is mandatory.</span>
                     </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
+
+                <editor class="tinyMce" formControlName="content" [init]="{plugins: 'link'}"></editor>
 
                 <div class=" btn">
                     <button mat-raised-button color="primary" type="submit">Post</button>
                 </div>
                 <div class=" btn">
-                    <button mat-raised-button (click) = "cancel()" color="warn" type="button">Cancel</button>
+                    <button mat-raised-button (click)="cancel()" color="warn" type="button">Cancel</button>
                 </div>
             </div>
         </form>

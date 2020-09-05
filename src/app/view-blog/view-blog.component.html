@@ -25,7 +25,8 @@
           </div>
         </mat-card-header>
         <mat-card-content>
-          <p>
+          <p appHighlight [content]="blog.value.contentStr"
+            [classToApply]="'font-weight-bold'" [setTitle]="'true'">
             {{blog.value.contentStr}}
           </p>
         </mat-card-content>
@@ -39,14 +40,15 @@
               class="material-icons">chrome_reader_mode</i></button>
         </mat-card-actions>
       </mat-card>
-      <form #commentForm="ngForm" class="blog-view-style commentSyle" (ngSubmit)="postComment(commentForm.value)" *ngIf="cmtTggl">
-        <mat-form-field class="inpStl"  appearance="outline">
+      <form #commentForm="ngForm" class="blog-view-style commentSyle" (ngSubmit)="postComment(commentForm.value)"
+        *ngIf="cmtTggl">
+        <mat-form-field class="inpStl" appearance="outline">
           <mat-label> Comment </mat-label>
           <textarea name="txt" matInput placeholder="Enter Comment" ngModel> </textarea>
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit">Post</button>
       </form>
-      <div class="blog-view-style commentSyle" *ngFor = "let comment of (comments$ | async)">
+      <div class="blog-view-style commentSyle" *ngFor="let comment of (comments$ | async)">
         <div><strong>{{comment.username}} :</strong> {{comment.comment}}</div>
       </div>
 
@@ -56,8 +58,8 @@
 
     </div>
 
-    <button mat-fab class="add-btn" (click) = "navigateToHome()" color="primary" type="button"><i
-      class="material-icons">arrow_back</i></button>
+    <button mat-fab class="add-btn" (click)="navigateToHome()" color="primary" type="button"><i
+        class="material-icons">arrow_back</i></button>
 
   </mat-drawer-content>
 </mat-drawer-container>

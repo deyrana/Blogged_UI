@@ -42,6 +42,7 @@ import { WithLoadingPipe } from './pipes/with-loading.pipe';
 import { NgxImageCompressService } from 'ngx-image-compress';
 import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.component';
 import { IconModalComponent } from './icon-modal/icon-modal.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { IconModalComponent } from './icon-modal/icon-modal.component';
     MatCardModule,
     MatGridListModule,
     MatDialogModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    EditorModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
