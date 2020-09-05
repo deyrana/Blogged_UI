@@ -66,6 +66,9 @@ MIT
 @angular/router
 MIT
 
+@tinymce/tinymce-angular
+Apache-2.0
+
 css-loader
 MIT
 Copyright JS Foundation and other contributors
