@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../dialog/dialog.component';
 import { filter, map } from 'rxjs/operators';
 import { Comments } from '../models/comments.model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-blog',
@@ -33,7 +34,7 @@ export class ViewBlogComponent implements OnInit {
   comments$: Observable<Comments[]>;
 
   constructor(private route: ActivatedRoute, private blogService: BlogService, private authService: AuthService,
-    private dialog: MatDialog, private router: Router) { }
+    private dialog: MatDialog, private router: Router, private _location: Location) { }
 
   ngOnInit(): void {
     this.username = this.authService.getUser();
@@ -139,7 +140,7 @@ export class ViewBlogComponent implements OnInit {
   }
 
   navigateToHome(){
-    this.router.navigate(['/home']);
+    this._location.back();
   }
 
 }

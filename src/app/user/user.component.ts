@@ -66,4 +66,10 @@ export class UserComponent implements OnInit {
     this.router.navigate(['/home']);
   }
 
+  navigateEdit() {
+    this.router.navigate(['/user/edit'], { queryParams: { name: this.userCompleteData.name, 
+      email: this.userCompleteData.email, image: this.userCompleteData.image, 
+      dob: this.userCompleteData.dateOfBirth } });
+  }
+
 }

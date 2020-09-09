@@ -76,4 +76,8 @@ export class UserService {
   fetchAllIcons(): Observable<any[]>{
     return this.http.get<any[]>(environment.restApi + 'images');
   }
+
+  editUserData(userFrom: any): Observable<any> {
+    return this.http.put<any>(environment.restApi + 'users/edit', userFrom, { observe: 'response' });
+  }
 }

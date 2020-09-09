@@ -10,6 +10,7 @@ import { UserComponent } from './user/user.component';
 import { ViewBlogComponent } from './view-blog/view-blog.component';
 import { MyBlogsComponent } from './my-blogs/my-blogs.component';
 import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
   { path: 'blogs/add', component: AddBlogComponent, canActivate: [AuthGuard] },
   { path: 'user/detail', component: UserComponent, canActivate: [AuthGuard] },
+  { path: 'user/edit', component: UserEditComponent, canActivate: [AuthGuard] },
   { path: 'blogs/:id', component: ViewBlogComponent, canActivate: [AuthGuard]},
   { path: 'user/blogs', component: MyBlogsComponent, canActivate: [AuthGuard]},
   { path: 'user/favBlogs', component: FavouriteBlogsComponent, canActivate: [AuthGuard]},

@@ -5,7 +5,6 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 import { startWith, map } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 import { BlogService } from '../services/blog.service';
@@ -24,6 +23,7 @@ export class AddBlogComponent implements OnInit {
   backdrop: boolean;
   navbarMode: string;
   username: string;
+  pageLoad: boolean;
 
   @ViewChild('genreInput') genreInput: ElementRef<HTMLInputElement>;
   visible = true;
@@ -42,6 +42,7 @@ export class AddBlogComponent implements OnInit {
     private blogService: BlogService, private dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit(): void {
+    this.pageLoad = false;
     this.headerTitle = "Add Blog";
     this.backdrop = true;
     this.navbarMode = "over";
@@ -59,10 +60,6 @@ export class AddBlogComponent implements OnInit {
         startWith(null),
         map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
     });
-
-    // this.filteredOptions = this.AddBlogForm.get('genres').valueChanges.pipe(
-    //   startWith(null),
-    //   map((gnr: string | null) => gnr ? this._filter(gnr) : this.genre.slice()));
   }
 
   private _filter(value: string): string[] {
@@ -109,13 +106,13 @@ export class AddBlogComponent implements OnInit {
 
   submit() {
     if (this.AddBlogForm.valid) {
+      this.pageLoad = true;
       this.AddBlogForm.get('genres').setValue(this.selectedGenre);
       const formData = this.setUpFormData();
       this.blogService.saveBlog(formData).subscribe((response) => {
-        console.log(response);
+        this.pageLoad = false;
         console.log(response.status);
         if (response.status === 200) {
-          console.log("Success");
           let title: string = "Success";
           let content: string = "Blog has been posted successfully!";
           let url: string = null;

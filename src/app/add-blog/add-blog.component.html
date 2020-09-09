@@ -4,7 +4,12 @@
     </mat-drawer>
     <mat-drawer-content>
         <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
-        <form [formGroup]="AddBlogForm" (submit)="submit()">
+
+        <div *ngIf="pageLoad" class="spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <form *ngIf="!pageLoad" [formGroup]="AddBlogForm" (submit)="submit()">
 
             <mat-form-field appearance="legacy" class="genreStyle">
                 <mat-chip-list #chipList aria-label="Genre selection">
@@ -44,16 +49,6 @@
                         <span *ngIf="AddBlogForm.controls.header.errors.required">This field is mandatory.</span>
                     </mat-error>
                 </mat-form-field>
-
-                <!-- <mat-form-field class="form-field" appearance="outline">
-                    <mat-label>Content</mat-label>
-                    <textarea class="contentStyle" matInput formControlName="content"
-                        placeholder="Enter Content for the Blog Here"></textarea>
-
-                    <mat-error *ngIf=" AddBlogForm.controls.content.invalid &&  AddBlogForm.controls.content.touched">
-                        <span *ngIf="AddBlogForm.controls.content.errors.required">This field is mandatory.</span>
-                    </mat-error>
-                </mat-form-field> -->
 
                 <editor class="tinyMce" formControlName="content" [init]="{plugins: 'link'}"></editor>
 

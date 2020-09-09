@@ -1,0 +1,48 @@
+<mat-drawer-container class="example-container bg" [hasBackdrop]="backdrop">
+    <mat-drawer #drawer class="navbar-style" [mode]="navbarMode">
+        <app-sidenavcontent></app-sidenavcontent>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header [headerTitle]="headerTitle" (toggle)="drawer.toggle()"></app-header>
+
+        <div *ngIf="pageLoad" class="spinner">
+            <mat-spinner></mat-spinner>
+        </div>
+
+        <form *ngIf="!pageLoad" [formGroup]="UserEditForm" class="form-container" (submit) = "submit()">
+            <img [src]="imgUrl" class="image-style">
+            <button class="uploadButton" type="button" (click)="openIconDialog()"></button><br>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Name </mat-label>
+                <input matInput formControlName="name">
+                <mat-error *ngIf="UserEditForm.controls.name.touched && UserEditForm.controls.name.invalid">
+                    <span *ngIf="UserEditForm.controls.name.errors.required">This field is mandatory.</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label> Email </mat-label>
+                <input matInput formControlName="email">
+                <mat-hint>use like : demo@demo.com</mat-hint>
+                <mat-error *ngIf="UserEditForm.controls.email.touched && UserEditForm.controls.email.invalid">
+                    <span *ngIf="UserEditForm.controls.email.errors.email">Please enter a valid email id</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-field" color="primary" appearance="outline">
+                <mat-label>Date of Birth</mat-label>
+                <input matInput formControlName="dob" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="form-field">
+                <button style="margin-right: 10px;" mat-raised-button color="primary" type="submit">Save</button>
+                <button mat-raised-button color="warn" type="button" (click) = "navigateToAccount()">Cancel</button>
+            </div>
+
+        </form>
+
+    </mat-drawer-content>
+</mat-drawer-container>

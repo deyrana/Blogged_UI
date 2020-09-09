@@ -43,6 +43,7 @@ import { NgxImageCompressService } from 'ngx-image-compress';
 import { FavouriteBlogsComponent } from './favourite-blogs/favourite-blogs.component';
 import { IconModalComponent } from './icon-modal/icon-modal.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
+import { UserEditComponent } from './user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { EditorModule } from '@tinymce/tinymce-angular';
     MyBlogsComponent,
     WithLoadingPipe,
     FavouriteBlogsComponent,
-    IconModalComponent
+    IconModalComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,

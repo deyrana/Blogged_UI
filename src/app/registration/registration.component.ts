@@ -196,7 +196,11 @@ export class RegistrationComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed - '+result);
-      this.profilePic = result;
+      if(result!=undefined){
+        this.profilePic = result;
+      } else{
+        this.profilePic = "assets/images/user.png";
+      }
     });
   }
 
